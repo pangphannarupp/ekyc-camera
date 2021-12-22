@@ -1,8 +1,12 @@
 package com.mcnc.kotlin_ekyc;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Size;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -12,8 +16,17 @@ import com.innov8tif.facedetector.listener.FaceDetectorResultListener;
 import com.innov8tif.facedetector.model.FaceAttr;
 import com.innov8tif.facedetector.model.config.Config;
 import com.innov8tif.okaycam.cam.OkayCamDoc;
+import com.innov8tif.okaycam.config.CameraFacing;
+import com.innov8tif.okaycam.config.CaptureConfigPair;
+import com.innov8tif.okaycam.config.OkayCamBtnConfig;
+import com.innov8tif.okaycam.config.OkayCamCaptureConfig;
 import com.innov8tif.okaycam.config.OkayCamConfig;
+import com.innov8tif.okaycam.config.OkayCamFrameConfig;
+import com.innov8tif.okaycam.config.OkayCamLabelConfig;
+import com.innov8tif.okaycam.config.OkayCamTimerConfig;
 import com.innov8tif.okaycam.config.OkaySelfieConfig;
+import com.innov8tif.okaycam.config.OkaySelfieLabelConfig;
+import com.innov8tif.okaycam.config.OkaySelfieSwichBtnConfig;
 import com.innov8tif.okaycam.selfie.OkayCamSelfie;
 import com.innov8tif.okaycam.utils.BitmapUtils;
 
@@ -43,8 +56,65 @@ public class MainActivity extends AppCompatActivity {
         btnTakeIdCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int time = 0;
                 OkayCamConfig config = OkayCamConfig.init(MainActivity.this);
+                //Crop photo after taking
                 config.setCrop(true);
+                //config.setWidth(100);
+                //Show flash button
+                config.setTorchBtnEnabled(true);
+                //Quality of photo 0.0f-1.0f
+                config.setImageQuality(1.0f);
+                //Top Label
+                config.setTopLabel(new OkayCamLabelConfig(
+                        "សួស្តី 안녕하세요 你好 こんにちは PPCBank",//text
+                        Color.parseColor("#ffffff"),//color
+                        14//font size
+                ));
+                //Bottom Label
+                config.setBottomLabel(new OkayCamLabelConfig(
+                        "សួស្តី 안녕하세요 你好 こんにちは PPCBank",//text
+                        Color.parseColor("#ffffff"),//color
+                        14//font size
+                ));
+                //Color of Timer
+                config.setTimer(new OkayCamTimerConfig(
+                        Color.parseColor("#ffffff"),//background
+                        Color.parseColor("#000000")//text
+                ));
+                //Frame
+                config.setFrame(new OkayCamFrameConfig(
+                        null, //new Size(100, 50),with and height
+                        Color.parseColor("#ffff46"),//color
+                        null//path of guide
+                ));
+                //Show overlay background
+                config.setShowOverlay(true);
+                //Delay, Flash, PathPhoto
+                config.setCaptureConfig(new CaptureConfigPair(
+                        new OkayCamCaptureConfig(
+                                0,//delay
+                                false,//flash
+                                null//pathPhoto
+                        ),
+                        new OkayCamCaptureConfig(
+                                time,//delay
+                                false,//flash
+                                null//pathPhoto
+                        )
+                ));
+                //Color of capture button
+                config.setCaptureBtnColor(Color.parseColor("#ffff46"));
+                //Color of confirm button
+                config.setConfirmBtnConfig(new OkayCamBtnConfig(
+                        Color.parseColor("#ffff46"),//background
+                        Color.parseColor("#ffffff")//icon
+                ));
+                //Color of retake button
+                config.setRetakeBtnConfig(new OkayCamBtnConfig(
+                        Color.parseColor("#ff8941"),//background
+                        Color.parseColor("#ffffff")//icon
+                ));
 
                 OkayCamDoc.start(MainActivity.this, LICENSE_KEY, config, (isSuccess, image, e) -> {
                     System.out.println("isSuccess: " + isSuccess + " image: " + image + " e: " + e);
@@ -70,6 +140,38 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 OkaySelfieConfig config = OkaySelfieConfig.init(MainActivity.this);
+//                config.setWidth(20);
+//                config.setImageQuality(300);
+//                config.setOutputPath(null);
+                //Default camera {Front/Back}
+                config.setDefaultCameraFacing(CameraFacing.FRONT);
+                //Top Label
+                config.setTopLabel(new OkaySelfieLabelConfig(
+                        "សួស្តី 안녕하세요 你好 こんにちは PPCBank",//text
+                        Color.parseColor("#ffffff"),//color
+                        14//font size
+                ));
+                //Color of bottom panel
+                config.setBottomFrameColor(Color.parseColor("#ffffff"));
+                //Color of capture button
+                config.setCaptureBtnColor(Color.parseColor("#ff365778"));
+                //Color of switch camera button
+                config.setSwitchBtnConfig(new OkaySelfieSwichBtnConfig(
+                        Color.parseColor("#ff830521"),//color
+                        true//show/hide
+                ));
+                //Color of confirm button
+                config.setConfirmBtnConfig(new OkayCamBtnConfig(
+                        Color.parseColor("#ffff46"),//background
+                        Color.parseColor("#ffffff")//icon
+                ));
+                //Color of retake button
+                config.setRetakeBtnConfig(new OkayCamBtnConfig(
+                        Color.parseColor("#ff8941"),//background
+                        Color.parseColor("#ffffff")//icon
+                ));
+
+
                 OkayCamSelfie.start(MainActivity.this, LICENSE_KEY, config, (Boolean isSuccess, String image, Exception e) -> {
                     System.out.println("isSuccess: " + isSuccess + " image: " + image + " e: " + e);
                     if(isSuccess) {

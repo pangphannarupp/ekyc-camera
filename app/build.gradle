@@ -42,7 +42,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //EKYC
-    implementation 'com.innov8tif.okaycam:OkayCam:1.1.1'
+    implementation 'com.innov8tif.okaycam:OkayCam:1.1.6'
 //    implementation 'com.innov8tif.okaydoc:OkayDoc:1.0.3'
     implementation 'com.innov8tif.okayidlite:OkayIDLite:1.0.2'
     implementation 'com.innov8tif.facedetector:FaceDetector:0.0.3'
