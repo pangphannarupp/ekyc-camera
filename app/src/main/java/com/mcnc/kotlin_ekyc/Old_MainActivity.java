@@ -6,8 +6,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.mcnc.ekyc_cam.EkycCam;
-
 public class Old_MainActivity extends AppCompatActivity {
 
     // This LICENSE KEY only uses for AppId com.mcnc.kotlin_ekyc

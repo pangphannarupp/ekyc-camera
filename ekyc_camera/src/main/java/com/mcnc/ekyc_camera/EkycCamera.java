@@ -1,4 +1,4 @@
-package com.mcnc.ekyc_cam;
+package com.mcnc.ekyc_camera;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,13 +22,13 @@ import com.innov8tif.okaycam.utils.BitmapUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class EkycCam {
+public class EkycCamera {
 
     // This LICENSE KEY only uses for AppId com.mcnc.kotlin_ekyc
     private static String LICENSE_KEY = "BaFHqPuvKLymNYOl8R7kTHOIS0NmdEHQKBLtZNHw3OMwhAIrljwdkP_yuPDVuHN5";
     private Context mContext;
 
-    public EkycCam(Context context) {
+    public EkycCamera(Context context) {
         mContext = context;
     }
 

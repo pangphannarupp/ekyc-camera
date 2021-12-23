@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import com.mcnc.ekyc_cam.EkycCam;
+import com.mcnc.ekyc_camera.EkycCamera;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnTakeIdCard, btnTakeSelfie;
 
-    private EkycCam ekycCam;
+    private EkycCamera ekycCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         btnTakeIdCard = findViewById(R.id.btnTakeIdCard);
         btnTakeSelfie = findViewById(R.id.btnTakeSelfie);
 
-        ekycCam = new EkycCam(MainActivity.this);
+        ekycCamera = new EkycCamera(MainActivity.this);
         JSONObject cameraTakeIdCardOption = new JSONObject();
         JSONObject cameraTakeSelfieOption = new JSONObject();
 
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    JSONObject resultObject = ekycCam.takeIdCard(cameraTakeIdCardOption);
+                    JSONObject resultObject = ekycCamera.takeIdCard(cameraTakeIdCardOption);
                     System.out.println("resultObject: " + resultObject);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    ekycCam.takeSelfie(cameraTakeSelfieOption);
+                    ekycCamera.takeSelfie(cameraTakeSelfieOption);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
