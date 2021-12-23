@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "kotlin_ekyc"
 include ':app'
+include ':ekyc_cam'
