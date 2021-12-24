@@ -3,6 +3,8 @@ package com.mcnc.ekyc_camera;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Size;
+import android.widget.Toast;
 
 import com.innov8tif.okaycam.cam.OkayCamDoc;
 import com.innov8tif.okaycam.config.CameraFacing;
@@ -26,6 +28,7 @@ public class EkycCamera {
 
     // This LICENSE KEY only uses for AppId com.mcnc.kotlin_ekyc
     private static String LICENSE_KEY = "BaFHqPuvKLymNYOl8R7kTHOIS0NmdEHQKBLtZNHw3OMwhAIrljwdkP_yuPDVuHN5";
+    private String licenseKey = "";
     private Context mContext;
 
     public EkycCamera(Context context) {
@@ -110,69 +113,167 @@ public class EkycCamera {
     //New
     public JSONObject takeIdCard(JSONObject option) throws JSONException {
         OkayCamConfig config = OkayCamConfig.init(mContext);
+
+        //License Key
+        final String KEY = "licenseKey";
+        if(option.has(KEY) && !option.isNull(KEY)) {
+            licenseKey = option.getString(KEY);
+        } else {
+
+        }
+
         //Crop photo after taking
-        config.setCrop(option.getBoolean("isCropped"));
-        //config.setWidth(100);
+        final String IS_CROPPED = "isCropped";
+        if(option.has(IS_CROPPED) && !option.isNull(IS_CROPPED)) {
+            config.setCrop(option.getBoolean(IS_CROPPED));
+        }
+
+        //width
+        final String WIDTH = "width";
+        if(option.has(WIDTH) && !option.isNull(WIDTH)) {
+            config.setWidth(option.getInt(WIDTH));
+        }
+
         //Show flash button
-        config.setTorchBtnEnabled(option.getBoolean("showFlashButton"));
+        final String SHOW_FLASH_BUTTON = "showFlashButton";
+        if(option.has(SHOW_FLASH_BUTTON) && !option.isNull(SHOW_FLASH_BUTTON)) {
+            config.setTorchBtnEnabled(option.getBoolean(SHOW_FLASH_BUTTON));
+        }
+
         //Quality of photo 0.0f-1.0f
-        config.setImageQuality(Float.parseFloat(option.get("imageQuality").toString()));
-        //Top Label
-        config.setTopLabel(new OkayCamLabelConfig(
-                option.getJSONObject("topLabelOption").getString("text"),//text
-                Color.parseColor(option.getJSONObject("topLabelOption").getString("color")),//color
-                option.getJSONObject("topLabelOption").getInt("size")//font size
-        ));
-        //Bottom Label
-        config.setBottomLabel(new OkayCamLabelConfig(
-                option.getJSONObject("bottomLabelOption").getString("text"),//text
-                Color.parseColor(option.getJSONObject("bottomLabelOption").getString("color")),//color
-                option.getJSONObject("bottomLabelOption").getInt("size")//font size
-        ));
-        //Color of Timer
-        config.setTimer(new OkayCamTimerConfig(
-                Color.parseColor(option.getJSONObject("timerOption").getString("backgroundColor")),//background
-                Color.parseColor(option.getJSONObject("timerOption").getString("numberColor"))//text
-        ));
-        //Frame
-        config.setFrame(new OkayCamFrameConfig(
-                null, //new Size(100, 50),with and height
-                Color.parseColor(option.getJSONObject("frameOption").getString("color")),//color
-                null//path of guide
-        ));
+        final String IMAGE_QUALITY = "imageQuality";
+        if(option.has(IMAGE_QUALITY) && !option.isNull(IMAGE_QUALITY)) {
+            config.setImageQuality(Float.parseFloat(option.get(IMAGE_QUALITY).toString()));
+        }
+
         //Show overlay background
-//        config.setShowOverlay(true);
-        config.setShowOverlay(option.getBoolean("showOverlay"));
-        //Delay, Flash, PathPhoto
-        config.setCaptureConfig(new CaptureConfigPair(
-                new OkayCamCaptureConfig(
-                        0,//delay
-                        false,//flash
-                        null//pathPhoto
-                ),
-                new OkayCamCaptureConfig(
-                        option.getJSONObject("captureOption").getInt("delay"),//delay
-                        option.getJSONObject("captureOption").getBoolean("showFlash"),//flash
-                        null//pathPhoto
-                )
-        ));
+        final String SHOW_OVERLAY = "showOverlay";
+        if(option.has(SHOW_OVERLAY) && !option.isNull(SHOW_OVERLAY)) {
+            config.setShowOverlay(option.getBoolean("showOverlay"));
+        }
+
         //Color of capture button
-        config.setCaptureBtnColor(Color.parseColor(option.getString("captureButtonColor")));
+        final String CAPTURE_BUTTON_COLOR = "captureButtonColor";
+        if(option.has(CAPTURE_BUTTON_COLOR) && !option.isNull(CAPTURE_BUTTON_COLOR)) {
+            config.setCaptureBtnColor(Color.parseColor(option.getString("captureButtonColor")));
+        }
+
+        //Top Label
+        final String TOP_LABEL_OPTION = "topLabelOption";
+        if(option.has(TOP_LABEL_OPTION) && !option.isNull(TOP_LABEL_OPTION)) {
+            String text = option.getJSONObject(TOP_LABEL_OPTION).has("text") && !option.getJSONObject(TOP_LABEL_OPTION).isNull("text") ?
+                            option.getJSONObject(TOP_LABEL_OPTION).getString("text") : "";
+            String color = option.getJSONObject(TOP_LABEL_OPTION).has("color") && !option.getJSONObject(TOP_LABEL_OPTION).isNull("color") ?
+                            option.getJSONObject(TOP_LABEL_OPTION).getString("color") : "#ffffff";
+            int size = option.getJSONObject(TOP_LABEL_OPTION).has("size") && !option.getJSONObject(TOP_LABEL_OPTION).isNull("size") ?
+                            option.getJSONObject(TOP_LABEL_OPTION).getInt("size") : 24;
+            config.setTopLabel(new OkayCamLabelConfig(
+                    text,//text
+                    Color.parseColor(color),//color
+                    size//font size
+            ));
+        }
+
+        //Bottom Label
+        final String BOTTOM_LABEL_OPTION = "bottomLabelOption";
+        if(option.has(BOTTOM_LABEL_OPTION) && !option.isNull(BOTTOM_LABEL_OPTION)) {
+            String text = option.getJSONObject(BOTTOM_LABEL_OPTION).has("text") && !option.getJSONObject(BOTTOM_LABEL_OPTION).isNull("text") ?
+                            option.getJSONObject(BOTTOM_LABEL_OPTION).getString("text") : "";
+            String color = option.getJSONObject(BOTTOM_LABEL_OPTION).has("color") && !option.getJSONObject(BOTTOM_LABEL_OPTION).isNull("color") ?
+                            option.getJSONObject(BOTTOM_LABEL_OPTION).getString("color") : "#ffffff";
+            int size = option.getJSONObject(BOTTOM_LABEL_OPTION).has("size") && !option.getJSONObject(BOTTOM_LABEL_OPTION).isNull("size") ?
+                            option.getJSONObject(BOTTOM_LABEL_OPTION).getInt("size") : 24;
+            config.setBottomLabel(new OkayCamLabelConfig(
+                    text,//text
+                    Color.parseColor(color),//color
+                    size//font size
+            ));
+        }
+
+        //Color of Timer
+        final String TIMER_OPTION = "timerOption";
+        if(option.has(TIMER_OPTION) && !option.isNull(TIMER_OPTION)) {
+            String backgroundColor = option.getJSONObject(TIMER_OPTION).has("backgroundColor") && !option.getJSONObject(TIMER_OPTION).isNull("backgroundColor") ?
+                            option.getJSONObject(TIMER_OPTION).getString("backgroundColor") : "#662196F3";
+            String numberColor = option.getJSONObject(TIMER_OPTION).has("numberColor") && !option.getJSONObject(TIMER_OPTION).isNull("numberColor") ?
+                            option.getJSONObject(TIMER_OPTION).getString("numberColor") : "#ffffff";
+            config.setTimer(new OkayCamTimerConfig(
+                    Color.parseColor(backgroundColor),//background
+                    Color.parseColor(numberColor)//text
+            ));
+        }
+
+        //Frame
+        final String FRAME_OPTION = "frameOption";
+        if(option.has(FRAME_OPTION) && !option.isNull(FRAME_OPTION)) {
+            Size sze = option.getJSONObject(FRAME_OPTION).has("size") && !option.getJSONObject(FRAME_OPTION).isNull("size") ?
+                new Size(
+                        option.getJSONObject(FRAME_OPTION).getJSONObject("size").has("width") && !option.getJSONObject(FRAME_OPTION).getJSONObject("size").isNull("width") ?
+                                option.getJSONObject(FRAME_OPTION).getJSONObject("size").getInt("width") : 0,
+                        option.getJSONObject(FRAME_OPTION).getJSONObject("size").has("height") && !option.getJSONObject(FRAME_OPTION).getJSONObject("size").isNull("height") ?
+                                option.getJSONObject(FRAME_OPTION).getJSONObject("size").getInt("height") : 0
+                ): null;
+            String color = option.getJSONObject(FRAME_OPTION).has("color") && !option.getJSONObject(FRAME_OPTION).isNull("color") ?
+                        option.getJSONObject(FRAME_OPTION).getString("color") : "#ffffff";
+            String content = option.getJSONObject(FRAME_OPTION).has("content") && !option.getJSONObject(FRAME_OPTION).isNull("content") ?
+                        option.getJSONObject(FRAME_OPTION).getString("content") : null;
+            config.setFrame(new OkayCamFrameConfig(
+                    sze, //new Size(100, 50),with and height
+                    Color.parseColor(color),//color
+                    content//path of guide
+            ));
+        }
+
+        //Delay, Flash, PathPhoto
+        final String CAPTURE_OPTION = "captureOption";
+        if(option.has(CAPTURE_OPTION) && !option.isNull(CAPTURE_OPTION)) {
+            int delay = option.getJSONObject(CAPTURE_OPTION).has("delay") && !option.getJSONObject(CAPTURE_OPTION).isNull("delay") ?
+                        option.getJSONObject(CAPTURE_OPTION).getInt("delay") : 5;
+            boolean showFlash = option.getJSONObject(CAPTURE_OPTION).has("showFlash") && !option.getJSONObject(CAPTURE_OPTION).isNull("showFlash") ?
+                        option.getJSONObject(CAPTURE_OPTION).getBoolean("showFlash") : true;
+            config.setCaptureConfig(new CaptureConfigPair(
+                    new OkayCamCaptureConfig(
+                            0,//delay
+                            false,//flash
+                            null//pathPhoto
+                    ),
+                    new OkayCamCaptureConfig(
+                            delay,//delay
+                            showFlash,//flash
+                            null//pathPhoto
+                    )
+            ));
+        }
+
         //Color of confirm button
-        config.setConfirmBtnConfig(new OkayCamBtnConfig(
-                Color.parseColor(option.getJSONObject("confirmButtonOption").getString("backgroundColor")),//background
-                Color.parseColor(option.getJSONObject("confirmButtonOption").getString("iconColor"))//icon
-        ));
+        final String CONFIRM_BUTTON_OPTION = "confirmButtonOption";
+        if(option.has(CONFIRM_BUTTON_OPTION) && !option.isNull(CONFIRM_BUTTON_OPTION)) {
+            String backgroundColor = option.getJSONObject(CONFIRM_BUTTON_OPTION).has("backgroundColor") && !option.getJSONObject(CONFIRM_BUTTON_OPTION).isNull("backgroundColor") ?
+                        option.getJSONObject(CONFIRM_BUTTON_OPTION).getString("backgroundColor") : "#EB144C";
+            String iconColor = option.getJSONObject(CONFIRM_BUTTON_OPTION).has("iconColor") && !option.getJSONObject(CONFIRM_BUTTON_OPTION).isNull("iconColor") ?
+                        option.getJSONObject(CONFIRM_BUTTON_OPTION).getString("iconColor") : "#ffffff";
+            config.setConfirmBtnConfig(new OkayCamBtnConfig(
+                    Color.parseColor(backgroundColor),//background
+                    Color.parseColor(iconColor)//icon
+            ));
+        }
         //Color of retake button
-        config.setRetakeBtnConfig(new OkayCamBtnConfig(
-                Color.parseColor(option.getJSONObject("retakeButtonOption").getString("backgroundColor")),//background
-                Color.parseColor(option.getJSONObject("retakeButtonOption").getString("iconColor"))//icon
-        ));
+        final String RETAKE_BUTTON_OPTION = "retakeButtonOption";
+        if(option.has(RETAKE_BUTTON_OPTION) && !option.isNull(RETAKE_BUTTON_OPTION)) {
+            String backgroundColor = option.getJSONObject(RETAKE_BUTTON_OPTION).has("backgroundColor") && !option.getJSONObject(RETAKE_BUTTON_OPTION).isNull("backgroundColor") ?
+                        option.getJSONObject(RETAKE_BUTTON_OPTION).getString("backgroundColor") : "#EB144C";
+            String iconColor = option.getJSONObject(RETAKE_BUTTON_OPTION).has("iconColor") && !option.getJSONObject(RETAKE_BUTTON_OPTION).isNull("iconColor") ?
+                        option.getJSONObject(RETAKE_BUTTON_OPTION).getString("iconColor") : "#ffffff";
+            config.setRetakeBtnConfig(new OkayCamBtnConfig(
+                    Color.parseColor(backgroundColor),//background
+                    Color.parseColor(iconColor)//icon
+            ));
+        }
 
         JSONObject resultObject = new JSONObject();
         resultObject.put("imageUrl", "");
 
-        OkayCamDoc.start((Activity) mContext, option.getString("licenseKey"), config, (isSuccess, image, e) -> {
+        OkayCamDoc.start((Activity) mContext, licenseKey, config, (isSuccess, image, e) -> {
             System.out.println("isSuccess: " + isSuccess + " image: " + image + " e: " + e);
             if(isSuccess) {
                 String result = BitmapUtils.INSTANCE.convertToBase64(image.get(0));
@@ -239,39 +340,108 @@ public class EkycCamera {
     //New
     public JSONObject takeSelfie(JSONObject option) throws JSONException {
         OkaySelfieConfig config = OkaySelfieConfig.init(mContext);
-        //config.setWidth(20);
-        //config.setImageQuality(300);
-        //config.setOutputPath(null);
+
+        //License Key
+        final String KEY = "licenseKey";
+        if(option.has(KEY) && !option.isNull(KEY)) {
+            licenseKey = option.getString(KEY);
+        } else {
+
+        }
+
+        //width
+        final String WIDTH = "width";
+        if(option.has(WIDTH) && !option.isNull(WIDTH)) {
+            config.setWidth(option.getInt(WIDTH));
+        }
+
+        //Quality of image
+        final String IMAGE_QUALITY = "imageQuality";
+        if(option.has(IMAGE_QUALITY) && !option.isNull(IMAGE_QUALITY)) {
+            config.setImageQuality(Float.parseFloat(option.get(IMAGE_QUALITY).toString()));
+        }
+
+        //Path of output image
+        final String OUTPUT_PATH = "outputPath";
+        if(option.has(OUTPUT_PATH) && !option.isNull(OUTPUT_PATH)) {
+            config.setOutputPath(option.getString(OUTPUT_PATH));
+        }
+
         //Default camera {Front/Back}
-        config.setDefaultCameraFacing(option.getBoolean("isFrontCamera") ? CameraFacing.FRONT : CameraFacing.BACK);
-        //Top Label
-        config.setTopLabel(new OkaySelfieLabelConfig(
-                option.getJSONObject("topLabelOption").getString("text"),//text
-                Color.parseColor(option.getJSONObject("topLabelOption").getString("color")),//color
-                option.getJSONObject("topLabelOption").getInt("size")//font size
-        ));
+        final String IS_FRONT_CAMERA = "isFrontCamera";
+        if(option.has(IS_FRONT_CAMERA) && !option.isNull(IS_FRONT_CAMERA)) {
+            config.setDefaultCameraFacing(option.getBoolean(IS_FRONT_CAMERA) ? CameraFacing.FRONT : CameraFacing.BACK);
+        }
+
         //Color of bottom panel
-        config.setBottomFrameColor(Color.parseColor(option.getString("bottomPanelColor")));
+        final String BOTTOM_PANEL_COLOR = "bottomPanelColor";
+        if(option.has(BOTTOM_PANEL_COLOR) && !option.isNull(BOTTOM_PANEL_COLOR)) {
+            config.setBottomFrameColor(Color.parseColor(option.getString(BOTTOM_PANEL_COLOR)));
+        }
+
         //Color of capture button
-        config.setCaptureBtnColor(Color.parseColor(option.getString("captureButtonColor")));
+        final String CAPTURE_BUTTON_COLOR = "captureButtonColor";
+        if(option.has(CAPTURE_BUTTON_COLOR) && !option.isNull(CAPTURE_BUTTON_COLOR)) {
+            config.setCaptureBtnColor(Color.parseColor(option.getString(CAPTURE_BUTTON_COLOR)));
+        }
+
+        //Top Label
+        final String TOP_LABEL_OPTION = "topLabelOption";
+        if(option.has(TOP_LABEL_OPTION) && !option.isNull(TOP_LABEL_OPTION)) {
+            String text = option.getJSONObject(TOP_LABEL_OPTION).has("text") && !option.getJSONObject(TOP_LABEL_OPTION).isNull("text") ?
+                    option.getJSONObject(TOP_LABEL_OPTION).getString("text"): "Please align your face within the frame";
+            String color = option.getJSONObject(TOP_LABEL_OPTION).has("color") && !option.getJSONObject(TOP_LABEL_OPTION).isNull("color") ?
+                    option.getJSONObject(TOP_LABEL_OPTION).getString("color"): "#ffffff";
+            int size = option.getJSONObject(TOP_LABEL_OPTION).has("size") && !option.getJSONObject(TOP_LABEL_OPTION).isNull("size") ?
+                    option.getJSONObject(TOP_LABEL_OPTION).getInt("size"): 24;
+            config.setTopLabel(new OkaySelfieLabelConfig(
+                    text,//text
+                    Color.parseColor(color),//color
+                    size//font size
+            ));
+        }
+
         //Color of switch camera button
-        config.setSwitchBtnConfig(new OkaySelfieSwichBtnConfig(
-                Color.parseColor(option.getJSONObject("switchCameraButtonOption").getString("color")),//color
-                option.getJSONObject("switchCameraButtonOption").getBoolean("isShow")//show/hide
-        ));
+        final String SWITCH_CAMERA_BUTTON_OPTION = "switchCameraButtonOption";
+        if(option.has(SWITCH_CAMERA_BUTTON_OPTION) && !option.isNull(SWITCH_CAMERA_BUTTON_OPTION)) {
+            String color = option.getJSONObject(SWITCH_CAMERA_BUTTON_OPTION).has("color") && !option.getJSONObject(SWITCH_CAMERA_BUTTON_OPTION).isNull("color") ?
+                    option.getJSONObject(SWITCH_CAMERA_BUTTON_OPTION).getString("color") : "#ffffff";
+            boolean isShow = option.getJSONObject(SWITCH_CAMERA_BUTTON_OPTION).has("isShow") && !option.getJSONObject(SWITCH_CAMERA_BUTTON_OPTION).isNull("isShow") ?
+                    option.getJSONObject(SWITCH_CAMERA_BUTTON_OPTION).getBoolean("isShow") : true;
+            config.setSwitchBtnConfig(new OkaySelfieSwichBtnConfig(
+                    Color.parseColor(color),//color
+                    isShow//show/hide
+            ));
+        }
+
         //Color of confirm button
-        config.setConfirmBtnConfig(new OkayCamBtnConfig(
-                Color.parseColor(option.getJSONObject("confirmButtonOption").getString("backgroundColor")),//background
-                Color.parseColor(option.getJSONObject("confirmButtonOption").getString("iconColor"))//icon
-        ));
+        final String CONFIRM_BUTTON_OPTION = "confirmButtonOption";
+        if(option.has(CONFIRM_BUTTON_OPTION) && !option.isNull(CONFIRM_BUTTON_OPTION)) {
+            String backgroundColor = option.getJSONObject(CONFIRM_BUTTON_OPTION).has("backgroundColor") && !option.getJSONObject(CONFIRM_BUTTON_OPTION).isNull("backgroundColor") ?
+                    option.getJSONObject(CONFIRM_BUTTON_OPTION).getString("backgroundColor") : "#EB144C";
+            String iconColor = option.getJSONObject(CONFIRM_BUTTON_OPTION).has("iconColor") && !option.getJSONObject(CONFIRM_BUTTON_OPTION).isNull("iconColor") ?
+                    option.getJSONObject(CONFIRM_BUTTON_OPTION).getString("iconColor") : "#ffffff";
+
+            config.setConfirmBtnConfig(new OkayCamBtnConfig(
+                    Color.parseColor(backgroundColor),//background
+                    Color.parseColor(iconColor)//icon
+            ));
+        }
+
         //Color of retake button
-        config.setRetakeBtnConfig(new OkayCamBtnConfig(
-                Color.parseColor(option.getJSONObject("retakeButtonOption").getString("backgroundColor")),//background
-                Color.parseColor(option.getJSONObject("retakeButtonOption").getString("iconColor"))//icon
-        ));
+        final String RETAKE_BUTTON_OPTION = "retakeButtonOption";
+        if(option.has(RETAKE_BUTTON_OPTION) && !option.isNull(RETAKE_BUTTON_OPTION)) {
+            String backgroundColor = option.getJSONObject(RETAKE_BUTTON_OPTION).has("backgroundColor") && !option.getJSONObject(RETAKE_BUTTON_OPTION).isNull("backgroundColor") ?
+                    option.getJSONObject(RETAKE_BUTTON_OPTION).getString("backgroundColor") : "#EB144C";
+            String iconColor = option.getJSONObject(RETAKE_BUTTON_OPTION).has("iconColor") && !option.getJSONObject(RETAKE_BUTTON_OPTION).isNull("iconColor") ?
+                    option.getJSONObject(RETAKE_BUTTON_OPTION).getString("iconColor") : "#ffffff";
+            config.setRetakeBtnConfig(new OkayCamBtnConfig(
+                    Color.parseColor(backgroundColor),//background
+                    Color.parseColor(iconColor)//icon
+            ));
+        }
 
-
-        OkayCamSelfie.start((Activity) mContext, option.getString("licenseKey"), config, (Boolean isSuccess, String image, Exception e) -> {
+        OkayCamSelfie.start((Activity) mContext, licenseKey, config, (Boolean isSuccess, String image, Exception e) -> {
             System.out.println("isSuccess: " + isSuccess + " image: " + image + " e: " + e);
             if(isSuccess) {
                 String result = BitmapUtils.INSTANCE.convertToBase64(image);
