@@ -693,8 +693,21 @@ public class EkycCamera {
             } else {
                 JSONObject returnError = new JSONObject();
                 try {
-                    returnError.put("errorCode", -103);
-                    returnError.put("errorMessage", e.getMessage());
+                    int errorCode = 0;
+                    String errorMessage = "";
+                    if(e.getMessage().contains("Invalid license key")) {
+                        errorCode = -101;
+                        errorMessage = e.getMessage();
+                    } else if(e.getMessage().contains("User refused to grant permission")) {
+                        errorCode = -103;
+                        errorMessage = e.getMessage();
+                    } else if(e.getMessage().contains("User cancelled the activity")) {
+                        errorCode = -104;
+                        errorMessage = e.getMessage();
+                    }
+
+                    returnError.put("errorCode", errorCode);
+                    returnError.put("errorMessage", errorMessage);
                 } catch (JSONException jsonException) {
                     jsonException.printStackTrace();
                 }
@@ -713,12 +726,12 @@ public class EkycCamera {
         if(option.has(KEY) && !option.isNull(KEY)) {
             licenseKey = option.getString(KEY);
         } else {
-            JSONObject returnError = new JSONObject();
-            returnError.put("errorCode", -100);
-            returnError.put("errorMessage", "Please add license key.");
-            calback.onError(returnError);
-
-            return;
+//            JSONObject returnError = new JSONObject();
+//            returnError.put("errorCode", -100);
+//            returnError.put("errorMessage", "Please add license key.");
+//            calback.onError(returnError);
+//
+//            return;
         }
 
         //width
@@ -1009,11 +1022,9 @@ public class EkycCamera {
         }
 
         OkayCamSelfie.start((Activity) mContext, licenseKey, okaySelfieConfig, (Boolean isSuccess, String image, Exception e) -> {
-//            System.out.println("isSuccess: " + isSuccess + " image: " + image + " e: " + e);
             if(isSuccess) {
                 JSONObject returnResult = new JSONObject();
                 String result = BitmapUtils.INSTANCE.convertToBase64(image);
-//                System.out.println("result: " + result);
                 try {
                     returnResult.put("message", "Image is captured successfully.");
                     returnResult.put("image", result);
@@ -1026,8 +1037,21 @@ public class EkycCamera {
             } else {
                 JSONObject returnError = new JSONObject();
                 try {
-                    returnError.put("errorMessage", "Failed to capture image.");
-                    returnError.put("message", e.toString());
+                    int errorCode = 0;
+                    String errorMessage = "";
+                    if(e.getMessage().contains("Invalid license key")) {
+                        errorCode = -101;
+                        errorMessage = e.getMessage();
+                    } else if(e.getMessage().contains("User refused to grant permission")) {
+                        errorCode = -103;
+                        errorMessage = e.getMessage();
+                    } else if(e.getMessage().contains("User cancelled the activity")) {
+                        errorCode = -104;
+                        errorMessage = e.getMessage();
+                    }
+
+                    returnError.put("errorCode", errorCode);
+                    returnError.put("errorMessage", errorMessage);
                 } catch (JSONException jsonException) {
                     jsonException.printStackTrace();
                 }
