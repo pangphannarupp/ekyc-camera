@@ -161,7 +161,7 @@ public class EkycCamera {
 //    }
 
     //New
-    public void takeIdCard(JSONObject option, PhotoInterface calback) throws JSONException {
+    public void takeIdCard(JSONObject option, PhotoInterface callback) throws JSONException {
         OkayCamConfig config = OkayCamConfig.init(mContext);
 
         //License Key
@@ -172,7 +172,7 @@ public class EkycCamera {
             JSONObject returnError = new JSONObject();
             returnError.put("errorCode", -100);
             returnError.put("errorMessage", "Please add license key.");
-            calback.onError(returnError);
+            callback.onError(returnError);
 
             return;
         }
@@ -186,7 +186,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + IS_CROPPED + "} is not a type of boolean.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -201,7 +201,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + WIDTH + "} is not a type of integer.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -216,7 +216,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + SHOW_FLASH_BUTTON + "} is not a type of boolean.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -231,7 +231,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + IMAGE_QUALITY + "} is not a type of number.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -246,7 +246,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + SHOW_OVERLAY + "} is not a type of boolean.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -261,7 +261,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + SHOW_OVERLAY + "} is not a type of boolean.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -279,7 +279,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + TOP_LABEL_OPTION +".text} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -293,7 +293,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + TOP_LABEL_OPTION +".color} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -307,7 +307,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + TOP_LABEL_OPTION +".size} is not a type of integer.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -322,7 +322,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + TOP_LABEL_OPTION + "} is not a type of json object.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -341,7 +341,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + BOTTOM_LABEL_OPTION +".text} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -355,7 +355,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + BOTTOM_LABEL_OPTION +".color} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -369,7 +369,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + BOTTOM_LABEL_OPTION +".size} is not a type of integer.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -384,7 +384,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + BOTTOM_LABEL_OPTION + "} is not a type of json object.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -402,7 +402,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + TIMER_OPTION + ".backgroundColor} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -417,7 +417,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + TIMER_OPTION + ".numberColor} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -431,7 +431,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + TIMER_OPTION + "} is not a type of json object.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -453,7 +453,7 @@ public class EkycCamera {
                                 JSONObject returnError = new JSONObject();
                                 returnError.put("errorCode", -102);
                                 returnError.put("errorMessage", "Parameter {" + FRAME_OPTION + ".size.width} is not a type of integer.");
-                                calback.onError(returnError);
+                                callback.onError(returnError);
 
                                 return;
                             }
@@ -468,7 +468,7 @@ public class EkycCamera {
                                 JSONObject returnError = new JSONObject();
                                 returnError.put("errorCode", -102);
                                 returnError.put("errorMessage", "Parameter {" + FRAME_OPTION + ".size.height} is not a type of integer.");
-                                calback.onError(returnError);
+                                callback.onError(returnError);
 
                                 return;
                             }
@@ -490,7 +490,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + FRAME_OPTION + ".color} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -504,7 +504,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + FRAME_OPTION + ".content} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -519,7 +519,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + FRAME_OPTION + "} is not a type of json object.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -537,7 +537,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + CAPTURE_OPTION + ".delay} is not a type of integer.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -551,7 +551,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + CAPTURE_OPTION + ".showFlash} is not a type of boolean.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -565,7 +565,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + CAPTURE_OPTION + ".pathPhoto} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -598,7 +598,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + CONFIRM_BUTTON_OPTION + ".backgroundColor} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -612,7 +612,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + CONFIRM_BUTTON_OPTION + ".iconColor} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -626,7 +626,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + CONFIRM_BUTTON_OPTION + "} is not a type of json object.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -643,7 +643,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + RETAKE_BUTTON_OPTION + ".backgroundColor} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -657,7 +657,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + RETAKE_BUTTON_OPTION + ".iconColor} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -671,7 +671,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + RETAKE_BUTTON_OPTION + "} is not a type of json object.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -687,7 +687,7 @@ public class EkycCamera {
                 } catch (JSONException jsonException) {
                     jsonException.printStackTrace();
                 }
-                calback.onCompleted(returnResult);
+                callback.onCompleted(returnResult);
 
                 //startFaceDetector(image);
             } else {
@@ -711,14 +711,14 @@ public class EkycCamera {
                 } catch (JSONException jsonException) {
                     jsonException.printStackTrace();
                 }
-                calback.onError(returnError);
+                callback.onError(returnError);
             }
             return null;
         });
     }
 
     //New
-    public void takeSelfie(JSONObject option, PhotoInterface calback) throws JSONException {
+    public void takeSelfie(JSONObject option, PhotoInterface callback) throws JSONException {
         okaySelfieConfig = OkaySelfieConfig.init(mContext);
 
         //License Key
@@ -726,12 +726,12 @@ public class EkycCamera {
         if(option.has(KEY) && !option.isNull(KEY)) {
             licenseKey = option.getString(KEY);
         } else {
-//            JSONObject returnError = new JSONObject();
-//            returnError.put("errorCode", -100);
-//            returnError.put("errorMessage", "Please add license key.");
-//            calback.onError(returnError);
-//
-//            return;
+            JSONObject returnError = new JSONObject();
+            returnError.put("errorCode", -100);
+            returnError.put("errorMessage", "Please add license key.");
+            callback.onError(returnError);
+
+            return;
         }
 
         //width
@@ -743,7 +743,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + WIDTH + "} is not a type of integer.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -759,7 +759,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + IMAGE_QUALITY + "} is not a type of number.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -774,7 +774,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + OUTPUT_PATH + "} is not a type of string.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -790,7 +790,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + IS_FRONT_CAMERA + "} is not a type of boolean.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -805,7 +805,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + BOTTOM_PANEL_COLOR + "} is not a type of string.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -820,7 +820,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + CAPTURE_BUTTON_COLOR + "} is not a type of string.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -838,7 +838,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + TOP_LABEL_OPTION + ".text} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -852,7 +852,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + TOP_LABEL_OPTION + ".color} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -866,7 +866,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + TOP_LABEL_OPTION + ".size} is not a type of integer.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -882,7 +882,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + TOP_LABEL_OPTION + "} is not a type of json object.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -900,7 +900,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + SWITCH_CAMERA_BUTTON_OPTION + ".color} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -914,7 +914,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + SWITCH_CAMERA_BUTTON_OPTION + ".isShow} is not a type of boolean.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -928,7 +928,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + SWITCH_CAMERA_BUTTON_OPTION + "} is not a type of json object.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -946,7 +946,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + CONFIRM_BUTTON_OPTION + ".backgroundColor} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -960,7 +960,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + CONFIRM_BUTTON_OPTION + ".iconColor} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -974,7 +974,7 @@ public class EkycCamera {
                 JSONObject returnError = new JSONObject();
                 returnError.put("errorCode", -102);
                 returnError.put("errorMessage", "Parameter {" + CONFIRM_BUTTON_OPTION + "} is not a type of json object.");
-                calback.onError(returnError);
+                callback.onError(returnError);
 
                 return;
             }
@@ -992,7 +992,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + RETAKE_BUTTON_OPTION + ".backgroundColor} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -1006,7 +1006,7 @@ public class EkycCamera {
                         JSONObject returnError = new JSONObject();
                         returnError.put("errorCode", -102);
                         returnError.put("errorMessage", "Parameter {" + RETAKE_BUTTON_OPTION + ".iconColor} is not a type of string.");
-                        calback.onError(returnError);
+                        callback.onError(returnError);
 
                         return;
                     }
@@ -1031,7 +1031,7 @@ public class EkycCamera {
                 } catch (JSONException jsonException) {
                     jsonException.printStackTrace();
                 }
-                calback.onCompleted(returnResult);
+                callback.onCompleted(returnResult);
 
                 //startFaceDetector(image);
             } else {
@@ -1055,7 +1055,7 @@ public class EkycCamera {
                 } catch (JSONException jsonException) {
                     jsonException.printStackTrace();
                 }
-                calback.onError(returnError);
+                callback.onError(returnError);
             }
 
             return null;
