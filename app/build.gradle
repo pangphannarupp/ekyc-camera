@@ -47,8 +47,8 @@ dependencies {
 //    implementation 'com.innov8tif.okayidlite:OkayIDLite:1.0.2'
 //    implementation 'com.innov8tif.facedetector:FaceDetector:0.0.3'
 
-    implementation "androidx.core:core-ktx:+"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    implementation "androidx.core:core-ktx:+"
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation project(path: ':ekyc_camera')
 }

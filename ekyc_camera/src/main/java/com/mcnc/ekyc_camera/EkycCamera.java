@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Size;
-import android.widget.Toast;
 
 import com.innov8tif.okaycam.cam.OkayCamDoc;
 import com.innov8tif.okaycam.config.CameraFacing;
@@ -20,6 +19,7 @@ import com.innov8tif.okaycam.config.OkaySelfieLabelConfig;
 import com.innov8tif.okaycam.config.OkaySelfieSwichBtnConfig;
 import com.innov8tif.okaycam.selfie.OkayCamSelfie;
 import com.innov8tif.okaycam.utils.BitmapUtils;
+import com.mcnc.ekyc_camera.interfaces.PhotoInterface;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,91 +27,141 @@ import org.json.JSONObject;
 public class EkycCamera {
 
     // This LICENSE KEY only uses for AppId com.mcnc.kotlin_ekyc
-    private static String LICENSE_KEY = "BaFHqPuvKLymNYOl8R7kTHOIS0NmdEHQKBLtZNHw3OMwhAIrljwdkP_yuPDVuHN5";
+//    private static String LICENSE_KEY = "BaFHqPuvKLymNYOl8R7kTHOIS0NmdEHQKBLtZNHw3OMwhAIrljwdkP_yuPDVuHN5";
     private String licenseKey = "";
     private Context mContext;
+    OkaySelfieConfig okaySelfieConfig;
 
     public EkycCamera(Context context) {
         mContext = context;
     }
 
-    //Old
-    public void takeIdCardTest() {
-        int time = 0;
-        OkayCamConfig config = OkayCamConfig.init(mContext);
-        //Crop photo after taking
-        config.setCrop(true);
-        //config.setWidth(100);
-        //Show flash button
-        config.setTorchBtnEnabled(true);
-        //Quality of photo 0.0f-1.0f
-        config.setImageQuality(1.0f);
-        //Top Label
-        config.setTopLabel(new OkayCamLabelConfig(
-                "សួស្តី 안녕하세요 你好 こんにちは PPCBank",//text
-                Color.parseColor("#ffffff"),//color
-                14//font size
-        ));
-        //Bottom Label
-        config.setBottomLabel(new OkayCamLabelConfig(
-                "សួស្តី 안녕하세요 你好 こんにちは PPCBank",//text
-                Color.parseColor("#ffffff"),//color
-                14//font size
-        ));
-        //Color of Timer
-        config.setTimer(new OkayCamTimerConfig(
-                Color.parseColor("#ffffff"),//background
-                Color.parseColor("#000000")//text
-        ));
-        //Frame
-        config.setFrame(new OkayCamFrameConfig(
-                null, //new Size(100, 50),with and height
-                Color.parseColor("#ffff46"),//color
-                null//path of guide
-        ));
-        //Show overlay background
-        config.setShowOverlay(true);
-        //Delay, Flash, PathPhoto
-        config.setCaptureConfig(new CaptureConfigPair(
-                new OkayCamCaptureConfig(
-                        0,//delay
-                        false,//flash
-                        null//pathPhoto
-                ),
-                new OkayCamCaptureConfig(
-                        time,//delay
-                        false,//flash
-                        null//pathPhoto
-                )
-        ));
-        //Color of capture button
-        config.setCaptureBtnColor(Color.parseColor("#ffff46"));
-        //Color of confirm button
-        config.setConfirmBtnConfig(new OkayCamBtnConfig(
-                Color.parseColor("#ffff46"),//background
-                Color.parseColor("#ffffff")//icon
-        ));
-        //Color of retake button
-        config.setRetakeBtnConfig(new OkayCamBtnConfig(
-                Color.parseColor("#ff8941"),//background
-                Color.parseColor("#ffffff")//icon
-        ));
-
-        OkayCamDoc.start((Activity) mContext, LICENSE_KEY, config, (isSuccess, image, e) -> {
-            System.out.println("isSuccess: " + isSuccess + " image: " + image + " e: " + e);
-            if(isSuccess) {
-                String result = BitmapUtils.INSTANCE.convertToBase64(image.get(0));
-                System.out.println("result: " + result);
-                //startCardDetector(image.get(0));
-            } else {
-
-            }
-            return null;
-        });
-    }
+//    //Old
+//    public void takeIdCardTest() {
+//        int time = 0;
+//        OkayCamConfig config = OkayCamConfig.init(mContext);
+//        //Crop photo after taking
+//        config.setCrop(true);
+//        //config.setWidth(100);
+//        //Show flash button
+//        config.setTorchBtnEnabled(true);
+//        //Quality of photo 0.0f-1.0f
+//        config.setImageQuality(1.0f);
+//        //Top Label
+//        config.setTopLabel(new OkayCamLabelConfig(
+//                "សួស្តី 안녕하세요 你好 こんにちは PPCBank",//text
+//                Color.parseColor("#ffffff"),//color
+//                14//font size
+//        ));
+//        //Bottom Label
+//        config.setBottomLabel(new OkayCamLabelConfig(
+//                "សួស្តី 안녕하세요 你好 こんにちは PPCBank",//text
+//                Color.parseColor("#ffffff"),//color
+//                14//font size
+//        ));
+//        //Color of Timer
+//        config.setTimer(new OkayCamTimerConfig(
+//                Color.parseColor("#ffffff"),//background
+//                Color.parseColor("#000000")//text
+//        ));
+//        //Frame
+//        config.setFrame(new OkayCamFrameConfig(
+//                null, //new Size(100, 50),with and height
+//                Color.parseColor("#ffff46"),//color
+//                null//path of guide
+//        ));
+//        //Show overlay background
+//        config.setShowOverlay(true);
+//        //Delay, Flash, PathPhoto
+//        config.setCaptureConfig(new CaptureConfigPair(
+//                new OkayCamCaptureConfig(
+//                        0,//delay
+//                        false,//flash
+//                        null//pathPhoto
+//                ),
+//                new OkayCamCaptureConfig(
+//                        time,//delay
+//                        false,//flash
+//                        null//pathPhoto
+//                )
+//        ));
+//        //Color of capture button
+//        config.setCaptureBtnColor(Color.parseColor("#ffff46"));
+//        //Color of confirm button
+//        config.setConfirmBtnConfig(new OkayCamBtnConfig(
+//                Color.parseColor("#ffff46"),//background
+//                Color.parseColor("#ffffff")//icon
+//        ));
+//        //Color of retake button
+//        config.setRetakeBtnConfig(new OkayCamBtnConfig(
+//                Color.parseColor("#ff8941"),//background
+//                Color.parseColor("#ffffff")//icon
+//        ));
+//
+//        OkayCamDoc.start((Activity) mContext, LICENSE_KEY, config, (isSuccess, image, e) -> {
+//            System.out.println("isSuccess: " + isSuccess + " image: " + image + " e: " + e);
+//            if(isSuccess) {
+//                String result = BitmapUtils.INSTANCE.convertToBase64(image.get(0));
+//                System.out.println("result: " + result);
+//                //startCardDetector(image.get(0));
+//            } else {
+//
+//            }
+//            return null;
+//        });
+//    }
+//
+//    //Old
+//    public void takeSelfieTest() {
+//        OkaySelfieConfig config = OkaySelfieConfig.init(mContext);
+////                config.setWidth(20);
+////                config.setImageQuality(300);
+////                config.setOutputPath(null);
+//        //Default camera {Front/Back}
+//        config.setDefaultCameraFacing(CameraFacing.FRONT);
+//        //Top Label
+//        config.setTopLabel(new OkaySelfieLabelConfig(
+//                "សួស្តី 안녕하세요 你好 こんにちは PPCBank",//text
+//                Color.parseColor("#ffffff"),//color
+//                14//font size
+//        ));
+//        //Color of bottom panel
+//        config.setBottomFrameColor(Color.parseColor("#ffffff"));
+//        //Color of capture button
+//        config.setCaptureBtnColor(Color.parseColor("#ff365778"));
+//        //Color of switch camera button
+//        config.setSwitchBtnConfig(new OkaySelfieSwichBtnConfig(
+//                Color.parseColor("#ff830521"),//color
+//                true//show/hide
+//        ));
+//        //Color of confirm button
+//        config.setConfirmBtnConfig(new OkayCamBtnConfig(
+//                Color.parseColor("#ffff46"),//background
+//                Color.parseColor("#ffffff")//icon
+//        ));
+//        //Color of retake button
+//        config.setRetakeBtnConfig(new OkayCamBtnConfig(
+//                Color.parseColor("#ff8941"),//background
+//                Color.parseColor("#ffffff")//icon
+//        ));
+//
+//
+//        OkayCamSelfie.start((Activity) mContext, LICENSE_KEY, config, (Boolean isSuccess, String image, Exception e) -> {
+//            System.out.println("isSuccess: " + isSuccess + " image: " + image + " e: " + e);
+//            if(isSuccess) {
+//                String result = BitmapUtils.INSTANCE.convertToBase64(image);
+//                System.out.println("result: " + result);
+////                        startFaceDetector(image);
+//            } else {
+//
+//            }
+//
+//            return null;
+//        });
+//    }
 
     //New
-    public JSONObject takeIdCard(JSONObject option) throws JSONException {
+    public void takeIdCard(JSONObject option, PhotoInterface calback) throws JSONException {
         OkayCamConfig config = OkayCamConfig.init(mContext);
 
         //License Key
@@ -270,76 +320,36 @@ public class EkycCamera {
             ));
         }
 
-        JSONObject resultObject = new JSONObject();
-        resultObject.put("imageUrl", "");
-
         OkayCamDoc.start((Activity) mContext, licenseKey, config, (isSuccess, image, e) -> {
-            System.out.println("isSuccess: " + isSuccess + " image: " + image + " e: " + e);
+//            System.out.println("isSuccess: " + isSuccess + " image: " + image + " e: " + e);
             if(isSuccess) {
+                JSONObject returnResult = new JSONObject();
                 String result = BitmapUtils.INSTANCE.convertToBase64(image.get(0));
-                System.out.println("result: " + result);
-                //startCardDetector(image.get(0));
+//                System.out.println("result: " + result);
+                try {
+                    returnResult.put("imageUrl", result);
+                } catch (JSONException jsonException) {
+                    jsonException.printStackTrace();
+                }
+                calback.onCompleted(returnResult);
+
+                //startFaceDetector(image);
             } else {
-
+                JSONObject returnError = new JSONObject();
+                try {
+                    returnError.put("error", e.toString());
+                } catch (JSONException jsonException) {
+                    jsonException.printStackTrace();
+                }
+                calback.onError(returnError);
             }
-            return null;
-        });
-
-        return resultObject;
-    }
-
-    //Old
-    public void takeSelfieTest() {
-        OkaySelfieConfig config = OkaySelfieConfig.init(mContext);
-//                config.setWidth(20);
-//                config.setImageQuality(300);
-//                config.setOutputPath(null);
-        //Default camera {Front/Back}
-        config.setDefaultCameraFacing(CameraFacing.FRONT);
-        //Top Label
-        config.setTopLabel(new OkaySelfieLabelConfig(
-                "សួស្តី 안녕하세요 你好 こんにちは PPCBank",//text
-                Color.parseColor("#ffffff"),//color
-                14//font size
-        ));
-        //Color of bottom panel
-        config.setBottomFrameColor(Color.parseColor("#ffffff"));
-        //Color of capture button
-        config.setCaptureBtnColor(Color.parseColor("#ff365778"));
-        //Color of switch camera button
-        config.setSwitchBtnConfig(new OkaySelfieSwichBtnConfig(
-                Color.parseColor("#ff830521"),//color
-                true//show/hide
-        ));
-        //Color of confirm button
-        config.setConfirmBtnConfig(new OkayCamBtnConfig(
-                Color.parseColor("#ffff46"),//background
-                Color.parseColor("#ffffff")//icon
-        ));
-        //Color of retake button
-        config.setRetakeBtnConfig(new OkayCamBtnConfig(
-                Color.parseColor("#ff8941"),//background
-                Color.parseColor("#ffffff")//icon
-        ));
-
-
-        OkayCamSelfie.start((Activity) mContext, LICENSE_KEY, config, (Boolean isSuccess, String image, Exception e) -> {
-            System.out.println("isSuccess: " + isSuccess + " image: " + image + " e: " + e);
-            if(isSuccess) {
-                String result = BitmapUtils.INSTANCE.convertToBase64(image);
-                System.out.println("result: " + result);
-//                        startFaceDetector(image);
-            } else {
-
-            }
-
             return null;
         });
     }
 
     //New
-    public JSONObject takeSelfie(JSONObject option) throws JSONException {
-        OkaySelfieConfig config = OkaySelfieConfig.init(mContext);
+    public void takeSelfie(JSONObject option, PhotoInterface calback) throws JSONException {
+        okaySelfieConfig = OkaySelfieConfig.init(mContext);
 
         //License Key
         final String KEY = "licenseKey";
@@ -352,37 +362,37 @@ public class EkycCamera {
         //width
         final String WIDTH = "width";
         if(option.has(WIDTH) && !option.isNull(WIDTH)) {
-            config.setWidth(option.getInt(WIDTH));
+            okaySelfieConfig.setWidth(option.getInt(WIDTH));
         }
 
         //Quality of image
         final String IMAGE_QUALITY = "imageQuality";
         if(option.has(IMAGE_QUALITY) && !option.isNull(IMAGE_QUALITY)) {
-            config.setImageQuality(Float.parseFloat(option.get(IMAGE_QUALITY).toString()));
+            okaySelfieConfig.setImageQuality(Float.parseFloat(option.get(IMAGE_QUALITY).toString()));
         }
 
         //Path of output image
         final String OUTPUT_PATH = "outputPath";
         if(option.has(OUTPUT_PATH) && !option.isNull(OUTPUT_PATH)) {
-            config.setOutputPath(option.getString(OUTPUT_PATH));
+            okaySelfieConfig.setOutputPath(option.getString(OUTPUT_PATH));
         }
 
         //Default camera {Front/Back}
         final String IS_FRONT_CAMERA = "isFrontCamera";
         if(option.has(IS_FRONT_CAMERA) && !option.isNull(IS_FRONT_CAMERA)) {
-            config.setDefaultCameraFacing(option.getBoolean(IS_FRONT_CAMERA) ? CameraFacing.FRONT : CameraFacing.BACK);
+            okaySelfieConfig.setDefaultCameraFacing(option.getBoolean(IS_FRONT_CAMERA) ? CameraFacing.FRONT : CameraFacing.BACK);
         }
 
         //Color of bottom panel
         final String BOTTOM_PANEL_COLOR = "bottomPanelColor";
         if(option.has(BOTTOM_PANEL_COLOR) && !option.isNull(BOTTOM_PANEL_COLOR)) {
-            config.setBottomFrameColor(Color.parseColor(option.getString(BOTTOM_PANEL_COLOR)));
+            okaySelfieConfig.setBottomFrameColor(Color.parseColor(option.getString(BOTTOM_PANEL_COLOR)));
         }
 
         //Color of capture button
         final String CAPTURE_BUTTON_COLOR = "captureButtonColor";
         if(option.has(CAPTURE_BUTTON_COLOR) && !option.isNull(CAPTURE_BUTTON_COLOR)) {
-            config.setCaptureBtnColor(Color.parseColor(option.getString(CAPTURE_BUTTON_COLOR)));
+            okaySelfieConfig.setCaptureBtnColor(Color.parseColor(option.getString(CAPTURE_BUTTON_COLOR)));
         }
 
         //Top Label
@@ -394,7 +404,7 @@ public class EkycCamera {
                     option.getJSONObject(TOP_LABEL_OPTION).getString("color"): "#ffffff";
             int size = option.getJSONObject(TOP_LABEL_OPTION).has("size") && !option.getJSONObject(TOP_LABEL_OPTION).isNull("size") ?
                     option.getJSONObject(TOP_LABEL_OPTION).getInt("size"): 24;
-            config.setTopLabel(new OkaySelfieLabelConfig(
+            okaySelfieConfig.setTopLabel(new OkaySelfieLabelConfig(
                     text,//text
                     Color.parseColor(color),//color
                     size//font size
@@ -408,7 +418,7 @@ public class EkycCamera {
                     option.getJSONObject(SWITCH_CAMERA_BUTTON_OPTION).getString("color") : "#ffffff";
             boolean isShow = option.getJSONObject(SWITCH_CAMERA_BUTTON_OPTION).has("isShow") && !option.getJSONObject(SWITCH_CAMERA_BUTTON_OPTION).isNull("isShow") ?
                     option.getJSONObject(SWITCH_CAMERA_BUTTON_OPTION).getBoolean("isShow") : true;
-            config.setSwitchBtnConfig(new OkaySelfieSwichBtnConfig(
+            okaySelfieConfig.setSwitchBtnConfig(new OkaySelfieSwichBtnConfig(
                     Color.parseColor(color),//color
                     isShow//show/hide
             ));
@@ -422,7 +432,7 @@ public class EkycCamera {
             String iconColor = option.getJSONObject(CONFIRM_BUTTON_OPTION).has("iconColor") && !option.getJSONObject(CONFIRM_BUTTON_OPTION).isNull("iconColor") ?
                     option.getJSONObject(CONFIRM_BUTTON_OPTION).getString("iconColor") : "#ffffff";
 
-            config.setConfirmBtnConfig(new OkayCamBtnConfig(
+            okaySelfieConfig.setConfirmBtnConfig(new OkayCamBtnConfig(
                     Color.parseColor(backgroundColor),//background
                     Color.parseColor(iconColor)//icon
             ));
@@ -435,26 +445,38 @@ public class EkycCamera {
                     option.getJSONObject(RETAKE_BUTTON_OPTION).getString("backgroundColor") : "#EB144C";
             String iconColor = option.getJSONObject(RETAKE_BUTTON_OPTION).has("iconColor") && !option.getJSONObject(RETAKE_BUTTON_OPTION).isNull("iconColor") ?
                     option.getJSONObject(RETAKE_BUTTON_OPTION).getString("iconColor") : "#ffffff";
-            config.setRetakeBtnConfig(new OkayCamBtnConfig(
+            okaySelfieConfig.setRetakeBtnConfig(new OkayCamBtnConfig(
                     Color.parseColor(backgroundColor),//background
                     Color.parseColor(iconColor)//icon
             ));
         }
 
-        OkayCamSelfie.start((Activity) mContext, licenseKey, config, (Boolean isSuccess, String image, Exception e) -> {
-            System.out.println("isSuccess: " + isSuccess + " image: " + image + " e: " + e);
+        OkayCamSelfie.start((Activity) mContext, licenseKey, okaySelfieConfig, (Boolean isSuccess, String image, Exception e) -> {
+//            System.out.println("isSuccess: " + isSuccess + " image: " + image + " e: " + e);
             if(isSuccess) {
+                JSONObject returnResult = new JSONObject();
                 String result = BitmapUtils.INSTANCE.convertToBase64(image);
-                System.out.println("result: " + result);
-//                        startFaceDetector(image);
-            } else {
+//                System.out.println("result: " + result);
+                try {
+                    returnResult.put("imageUrl", result);
+                } catch (JSONException jsonException) {
+                    jsonException.printStackTrace();
+                }
+                calback.onCompleted(returnResult);
 
+                //startFaceDetector(image);
+            } else {
+                JSONObject returnError = new JSONObject();
+                try {
+                    returnError.put("error", e.toString());
+                } catch (JSONException jsonException) {
+                    jsonException.printStackTrace();
+                }
+                calback.onError(returnError);
             }
 
             return null;
         });
-
-        return new JSONObject();
     }
 
     /*****************/

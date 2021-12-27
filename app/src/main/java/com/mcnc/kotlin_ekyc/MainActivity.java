@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import com.mcnc.ekyc_camera.EkycCamera;
+import com.mcnc.ekyc_camera.interfaces.PhotoInterface;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnTakeIdCard, btnTakeSelfie;
 
     private EkycCamera ekycCamera;
+    private PhotoInterface photoInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,8 +121,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    JSONObject resultObject = ekycCamera.takeIdCard(cameraTakeIdCardOption);
-                    System.out.println("resultObject: " + resultObject);
+                    ekycCamera.takeIdCard(cameraTakeIdCardOption, new PhotoInterface() {
+                        @Override
+                        public void onCompleted(JSONObject result) {
+                            System.out.println("onCompleted: " + result);
+                        }
+
+                        @Override
+                        public void onError(JSONObject error) {
+                            System.out.println("onError: " + error);
+                        }
+                    });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -136,7 +147,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    ekycCamera.takeSelfie(cameraTakeSelfieOption);
+                    ekycCamera.takeSelfie(cameraTakeSelfieOption, new PhotoInterface() {
+                        @Override
+                        public void onCompleted(JSONObject result) {
+                            System.out.println("onCompleted: " + result);
+                        }
+
+                        @Override
+                        public void onError(JSONObject error) {
+                            System.out.println("onError: " + error);
+                        }
+                    });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
