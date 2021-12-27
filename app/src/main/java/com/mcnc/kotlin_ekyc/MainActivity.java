@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import com.mcnc.ekyc_camera.EkycCamera;
-import com.mcnc.ekyc_camera.interfaces.PhotoInterface;
+import com.mcnc.ekyc_camera.interfaces.PhotoListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -110,17 +110,11 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        /*
-        * @btnTakeIdCard   {Event} Click
-        * @Return   {String} Will return image base 64 to Ionic
-        * @Usage    Take Front and Back ID Card
-        * @Feature  Crop Automatically
-        * */
         btnTakeIdCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    ekycCamera.takeIdCard(cameraTakeIdCardOption, new PhotoInterface() {
+                    ekycCamera.takeIdCard(cameraTakeIdCardOption, new PhotoListener() {
                         @Override
                         public void onCompleted(JSONObject result) {
                             System.out.println("onCompleted: " + result);
@@ -138,16 +132,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
-         * @btnTakeSelfie   {Event} Click
-         * @Return          {String} Will return image base 64 to Ionic
-         * @Usage           Take Selfie
-         * */
         btnTakeSelfie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    ekycCamera.takeSelfie(cameraTakeSelfieOption, new PhotoInterface() {
+                    ekycCamera.takeSelfie(cameraTakeSelfieOption, new PhotoListener() {
                         @Override
                         public void onCompleted(JSONObject result) {
                             System.out.println("onCompleted: " + result);
