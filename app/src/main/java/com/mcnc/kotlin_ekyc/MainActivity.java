@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private Button btnTakeIdCard, btnTakeSelfie;
 
     private EkycCamera ekycCamera;
-    private PhotoInterface photoInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             topLabelOption.put("size", 14);
             cameraTakeIdCardOption.put("topLabelOption", topLabelOption);
             JSONObject bottomLabelOption = new JSONObject();
-            bottomLabelOption.put("text", "Bottom Label");
+            bottomLabelOption.put("text", null);
             bottomLabelOption.put("color", "#fff842");
             bottomLabelOption.put("size", 14);
             cameraTakeIdCardOption.put("bottomLabelOption", bottomLabelOption);
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             JSONObject frameSizeOption = new JSONObject();
             frameSizeOption.put("width", 400);
             frameSizeOption.put("height", 100);
-//            frameOption.put("size", frameSizeOption);
+            frameOption.put("size", null);
             frameOption.put("color", "#ff1142");
             frameOption.put("content", null);
             cameraTakeIdCardOption.put("frameOption", frameOption);
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             cameraTakeSelfieOption.put("licenseKey", LICENSE_KEY);
             cameraTakeSelfieOption.put("width", null);
-            cameraTakeSelfieOption.put("imageQuality", 1.0f);
+            cameraTakeSelfieOption.put("imageQuality", 1.0);
             cameraTakeSelfieOption.put("outputPath", null);
             cameraTakeSelfieOption.put("isFrontCamera", true);
             cameraTakeSelfieOption.put("bottomPanelColor", "#003783");
@@ -134,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                     });
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    System.out.println("onError: " + e);
                 }
             }
         });
@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     });
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    System.out.println("onError: " + e);
                 }
             }
         });
