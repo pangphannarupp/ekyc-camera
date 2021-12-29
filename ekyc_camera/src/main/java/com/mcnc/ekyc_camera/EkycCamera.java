@@ -640,7 +640,6 @@ public class EkycCamera {
 
                 return;
             }
-
         }
 
         //Quality of image
